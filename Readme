@@ -1,0 +1,38 @@
+Feedreader
+
+Autor: Rudolf Kucera, xkucer91@stud.fit.vutbr.cz
+
+
+Popis: Program ziska informace o rss feedech, kterých URL adresy byly zadany uzivatelem a vypise je na vystup.
+
+Program byl vyvijen na merlinovi (CentOS Linux release 7.5.1804) v editoru Vim.
+
+Seznam souboru:
+    Makefile             - prekladovy soubor
+    manual.pdf           - dokumentace
+    Readme               - tento soubor
+    feedreader.cpp       - zde je main, spracovani argumentu, otevirani feedfile, volani ostatnich modulu
+    xmlmod.cpp, xmlmod.h - funkce pro praci s xml dokumentami, vypis na vystup
+    sslmod.cpp, sslmod.h - funkce pro praci s openssl, pripojovani k serveru, odesilani HTTP requestu a prijimani odpovedi
+
+Makefile:
+    $ make               - prelozi program
+    $ make clean         - odstrani prelozeny program
+    $ make tar           - vytvori archiv xkucer91.tar
+    $ make rmtar         - odstrani archiv xkucer91.tar
+
+Spusteni:
+    $ ./feedreader <URL | -f <feedfile>> [-c <certfile>] [-C <certaddr>] [-T] [-a] [-u]
+    -f je cesta k souboru feedfile
+    -c je cesta k souboru s certifikatem
+    -C je cesta ke slozke s certifikatama
+    -T vypise cas posledni aktualizace
+    -a vypise jmeno autora
+    -u vypise url adresu
+
+    - jestli uzivatel zada vice URL adres, spracujou se vsechny
+    - jestli uzivatel zada vice URL adres a taky feedfile, spracujou se nejprve vsechny URL adresy a az pak ty z feedfile
+    - jestli je na vystupu prazdny radek tam kde se ocekava text, je to proto ze dany prvek neni zadan
+    - jestli uzivatel zada vice -c nebo -C cest, pouzije se pouze posledna hodnota
+    - jestli se od serveru prijme jina HTTP odpoved ako je 200 OK, nevypise se nic a pokracuje se dalsi URL, nebo konec
+
